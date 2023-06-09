@@ -18,7 +18,44 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
       setQuantity((prevCount) => prevCount - 1);
     }
   }
-
+  const data = {
+    product_id : product._id,
+    quantity: quantity,
+    size: size
+  }
+  const handleAddToCart = async() => {
+    if(data.size==""){
+        toast.error("Please select size");
+    }
+    else{
+    const send = async () => {
+        const response = await fetch("/api/cart", {
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+        const result = response.json()
+        return(result)
+    }
+    toast.promise(
+       send,
+       {
+        pending: 'Adding to Cart ...',
+        success: `${product.name} Added to the Cart 👌`,
+        error: `${product.name} can not Added 🤯`
+      },
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        }
+    )
+    }
+  }
   const [button, setButton] = useState({
     "id1": false,
     "id2": false,
@@ -62,7 +99,7 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
             </p>
             <div className="flex gap-4 mt-5">
               <ToastContainer
-                position="top-center"
+                position="top-right"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
@@ -166,7 +203,7 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="text-xs sm:text-sm font-medium leading-4 bg-[#212121] text-[#fff] px-2 subsc:w-[50%] lg:w-auto lg:px-4 py-[0.65rem] flex gap-2 items-center justify-center">
+            <button onClick={handleAddToCart} className="text-xs sm:text-sm font-medium leading-4 bg-[#212121] text-[#fff] px-2 subsc:w-[50%] lg:w-auto lg:px-4 py-[0.65rem] flex gap-2 items-center justify-center">
               <svg
                 stroke="currentColor"
                 fill="none"

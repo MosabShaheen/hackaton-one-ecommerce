@@ -176,7 +176,9 @@ export default function Header() {
             placeholder="What are you looking for"
           />
         </div>
+        
         <div className=" items-center gap-3 hidden lg:flex">
+        <Link href="/cart">
           <svg
             stroke="currentColor"
             fill="none"
@@ -201,6 +203,7 @@ export default function Header() {
               fill="currentColor"
             ></path>
           </svg>
+          </Link>
         </div>
       </nav>
     </header>

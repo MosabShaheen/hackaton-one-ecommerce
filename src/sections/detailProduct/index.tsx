@@ -21,6 +21,7 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
   const data = {
     product_id : product._id,
     quantity: quantity,
+    price: product.price,
     size: size
   }
   const handleAddToCart = async() => {
@@ -51,9 +52,11 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+         theme: "light",
         }
-    )
+    ).then(()=> {
+      window.location.reload()
+    })
     }
   }
   const [button, setButton] = useState({

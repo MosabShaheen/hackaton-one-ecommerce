@@ -109,7 +109,7 @@ export default function Header() {
                   >
                     All Products
                   </Link>
-                  <Link
+                  <link
                     className="font-sora text-lg tracking-wide"
                     href="/cart"
                     onClick={() => activeTab(!tab)}
@@ -138,7 +138,7 @@ export default function Header() {
                         fill="currentColor"
                       ></path>
                     </svg>
-                  </Link>
+                  </link>
                 </div>
               </div>
             </div>

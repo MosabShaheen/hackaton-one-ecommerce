@@ -1,18 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, cartTable } from "@/lib/drizzle";
-import { eq, sql } from "drizzle-orm";
-import { getCoockies } from "../cart/route";
+import { eq, and, desc, sql } from "drizzle-orm";
+import { cookies } from "next/headers";
+import { v4 } from "uuid";
 
-export async function GET(request: NextRequest) {
-    const userId = await getCoockies()
-    try {
-        const result = db.select({
-            price: sql<number>`sum(cartTable.quantity * cartTable.price)`,
-            quantity: sql<number>`sum(cartTable.quantity)`
-        }).from(cartTable).where(eq(cartTable.user_id, userId))
-        return NextResponse.json(result, { status: 200 });
-    }
-    catch(error){
-        console.log(error)
-    }
-}
+export const GET = async (request: NextRequest) => {
+  const setCookies = cookies();
+  const userId = setCookies.get("user_id")?.value as string;
+  try {
+    const res = await db
+      .select()
+      .from(cartTable)
+      .where(eq(cartTable.user_id, userId))
+      .orderBy(desc(cartTable.id) );
+
+    return NextResponse.json({ res });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: "Something went wrong" });
+  }
+};

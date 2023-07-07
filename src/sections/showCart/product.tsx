@@ -4,21 +4,11 @@ import { createSanity } from "@/lib/createSanity";
 import { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import { urlForImage } from "@/lib/createSanity";
-import { useDispatch } from "react-redux";
-import { addToCart, updateTotalPrice } from "@/store/slice/cartSlice";
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Product: FC<{ row: any }> = ({ row }) => {
-  const dispatch = useDispatch();
-  const allPrice = row.price * row.quantity;
-
-  useEffect(() => {
-    dispatch(updateTotalPrice(allPrice));
-    dispatch(addToCart(row.quantity));
-  }, [dispatch, row.quantity, allPrice]);
-
   const [products, setProducts] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(row.quantity);
   const [save, openSave] = useState(false)
@@ -35,7 +25,8 @@ const Product: FC<{ row: any }> = ({ row }) => {
   };
   const handleSave = async () => {
     openSave(false)
-    const response = await fetch("api/cart", {
+    const save = async () => {
+     const response = await fetch("api/cart", {
         method: 'PATCH',
         body: JSON.stringify(
           {
@@ -45,26 +36,66 @@ const Product: FC<{ row: any }> = ({ row }) => {
           ),
         cache: 'no-store',
     })
-    if(response.ok) {
-      window.location.reload()
-    }  
-  }
+    return response
+    }
+    toast.promise(
+      save,
+      {
+       success: `Item updated successfully 👌`,
+       error: `Can not update🤯`
+     },
+     {
+       position: "top-center",
+       autoClose: 5000,
+       hideProgressBar: true,
+       closeOnClick: true,
+       pauseOnHover: true,
+       draggable: true,
+       progress: undefined,
+        theme: "light",
+       }
+   ).then(() => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  });
+   }
   const deleteData = {
     item_id: row.id,
   };
 
   const handleDelete = async () => {
-  
-      const response = await fetch(`/api/cart`, {
+
+    const deleteItem = async () => {
+     const response =  await fetch(`/api/cart`, {
         method: "DELETE",
         headers: { itemId: deleteData.item_id.toString() },
         cache: 'no-store',
       });
-      console.log(response)
-      if (response.ok) {
-        window.location.reload();
-      }
-  };
+      return (response);
+    }
+    toast.promise(
+      deleteItem,
+      {
+       success: `Item deleted successfully 👌`,
+       error: `Can not delete🤯`
+     },
+     {
+      position: "top-center",
+       autoClose: 5000,
+       hideProgressBar: true,
+       closeOnClick: true,
+       pauseOnHover: true,
+       draggable: true,
+       progress: undefined,
+        theme: "light",
+       }
+   ).then(() => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  });
+  }
 
   useEffect(() => {
     const getProduct = async () => {
@@ -93,6 +124,18 @@ const Product: FC<{ row: any }> = ({ row }) => {
               <p className="font-light text-xl leading-6 text-[#212121] py-1">
                 {product.name}
               </p>
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
               {
                 save === false?
                 <button onClick={handleDelete}>

@@ -1,32 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, cartTable } from "@/lib/drizzle";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, sql } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { v4 } from "uuid";
 
-
-export async function getCoockies() {
-  const setCookies = cookies();
-  const userId = setCookies.get("user_id")?.value as string
-  return userId
-}
-
 export const GET = async (request: NextRequest) => {
-  const userId = await getCoockies()
-  console.log(userId);
   try {
-    const res = await db
-      .select()
+    const setCookies = cookies();
+    const userId = setCookies.get("user_id")?.value as string;
+    const result = await db
+      .select({
+        price: sql<number>`sum(cart.quantity * cart.price)`,
+        quantity: sql<number>`sum(cart.quantity)`,
+      })
       .from(cartTable)
-      .where(eq(cartTable.user_id, userId))
-      .orderBy(desc(cartTable.id) );
-
-    return NextResponse.json({ res });
+      .where(eq(cartTable.user_id, userId));
+    return NextResponse.json(result[0], { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: "Something went wrong" });
   }
-};
+}
 
 export const POST = async (request: NextRequest) => {
   const uid = v4();
@@ -60,28 +54,33 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const PATCH = async (request: NextRequest) => {
-  const userId = await getCoockies()
-    const req = await request.json()
-  try{
-    await db.update(cartTable).set({quantity: req.quantity}).where(and(eq(cartTable.user_id, userId), eq(cartTable.id, req.id)))
+  const setCookies = cookies();
+  const userId = setCookies.get("user_id")?.value as string;
+  const req = await request.json();
+  try {
+    await db
+      .update(cartTable)
+      .set({ quantity: req.quantity })
+      .where(and(eq(cartTable.user_id, userId), eq(cartTable.id, req.id)));
     return NextResponse.json({ message: "Item deleted successfully" });
+  } catch (error) {
+    return NextResponse.json({ response: "failed" }, { status: 500 });
   }
-  catch (error) {
-    return NextResponse.json({ response: 'failed' }, { status: 500 });
-  }
-}
+};
 
 export const DELETE = async (request: NextRequest) => {
-  const userId = await getCoockies()
-    const itemId = request.headers.get('itemId') as any;
-    try {
-       await db
-        .delete(cartTable).where(and(eq(cartTable.user_id, userId), eq(cartTable.id, itemId))) // Include the product_id in the where clause
-        .execute();
-  
-      return NextResponse.json({ message: "Item deleted successfully" });
-    } catch (error) {
-      console.log(error);
-      return NextResponse.json({ message: "Something went wrong" });
-    }
-  };
+  const setCookies = cookies();
+  const userId = setCookies.get("user_id")?.value as string;
+  const itemId = request.headers.get("itemId") as any;
+  try {
+    await db
+      .delete(cartTable)
+      .where(and(eq(cartTable.user_id, userId), eq(cartTable.id, itemId))) // Include the product_id in the where clause
+      .execute();
+
+    return NextResponse.json({ message: "Item deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: "Something went wrong" });
+  }
+};

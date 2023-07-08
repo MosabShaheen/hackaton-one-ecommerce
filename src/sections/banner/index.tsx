@@ -10,7 +10,7 @@ export default function Banner(){
                     <h1 className="font-bold text-[3rem] sm:text-[3.5rem] tracking-wide text-[#212121] leading-[55px] my-10">An Industrial Take on Streetwear</h1>
                     <p className="sm:w-[70%] text-base leading-6 text-[#666]">{"Anyone can beat you but no one can beat your outfit as long as you wear Dine outfits."}</p>
                     <div className="my-10">
-                        <Link href="/allProducts">
+                        <Link href="/all-products">
                             <button className="sm:w-[35%] p-4 text-base bg-[#212121] font-semibold text-[#fff] flex gap-2 leading-4 justify-center items-center">
                             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" className="text-2xl font-bold" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                             {`Start Shopping`}

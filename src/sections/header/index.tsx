@@ -47,7 +47,7 @@ export default function Header() {
         </Link>
         <Link
           className="font-sora text-base tracking-wide hidden lg:block"
-          href="/allProduct"
+          href="/all-products"
         >
           All Product
         </Link>
@@ -118,13 +118,13 @@ export default function Header() {
                   </Link>
                   <Link
                     className="font-sora text-lg tracking-wide"
-                    href="/allProduct"
+                    href="/all-products"
                     onClick={() => activeTab(!tab)}
                   >
                     All Products
                   </Link>
-                  <link
-                    className="font-sora text-lg tracking-wide"
+                  <Link
+                    className="font-sora text-lg tracking-wide rounded-full bg-[#F1F1F1] p-3 relative"
                     href="/cart"
                     onClick={() => activeTab(!tab)}
                   >
@@ -152,7 +152,8 @@ export default function Header() {
                         fill="currentColor"
                       ></path>
                     </svg>
-                  </link>
+                    <p className="absolute top-0 right-2 text-xs px-1 bg-red-600 rounded-full text-white">{cartValue}</p>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -227,120 +228,3 @@ export default function Header() {
     </header>
   );
 }
-
-//   return (
-//     <header className="container mx-auto">
-//       <nav className="flex mx-auto justify-between items-center py-4 sm:px-10">
-//         <div className="py-10">
-//           <Link href="/">
-//             <Image src="/Logo.png" alt="Logo" width={158} height={27} />
-//           </Link>
-//         </div>
-
-//         <Link className="font-sora text-base tracking-wide hidden lg:block" href="/female">
-//           Female
-//         </Link>
-//         <Link className="font-sora text-base tracking-wide hidden lg:block" href="/male">
-//           Male
-//         </Link>
-//         <Link className="font-sora text-base tracking-wide hidden lg:block" href="/kids">
-//           Kids
-//         </Link>
-//         <Link className="font-sora text-base tracking-wide hidden lg:block" href="/allProduct">
-//           All Product
-//         </Link>
-//         <div className="-mr-1 lg:hidden">
-//           <button
-//             className="relative z-10 flex h-8 w-8 items-center justify-center [&amp;:not(:focus-visible)]:focus:outline-none"
-//             aria-label="Toggle Navigation"
-//             type="button"
-//             onClick={() => activeTab(!tab)}
-//           >
-//             {tab ? (
-//               <svg
-//                 stroke="currentColor"
-//                 fill="currentColor"
-//                 strokeWidth={0}
-//                 viewBox="0 0 20 20"
-//                 aria-hidden="true"
-//                 className="text-3xl cursor-pointer"
-//                 height="1em"
-//                 width="1em"
-//                 xmlns="http://www.w3.org/2000/svg"
-//               >
-//                 <path
-//                   fillRule="evenodd"
-//                   d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-//                   clipRule="evenodd"
-//                 ></path>
-//               </svg>
-//             ) : (
-//               <svg
-//                 stroke="currentColor"
-//                 fill="currentColor"
-//                 strokeWidth={0}
-//                 viewBox="0 0 512 512"
-//                 className="text-3xl cursor-pointer"
-//                 height="1em"
-//                 width="1em"
-//                 xmlns="http://www.w3.org/2000/svg"
-//               >
-//                 <path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256 405 136.798z"></path>
-//               </svg>
-//             )}
-//           </button>
-//         </div>
-//         <div
-//           className={`transition-opacity ease-in-out duration-500 ${
-//             tab ? "opacity-0 invisible" : "opacity-100 visible"
-//           }`}
-//         >
-//           <div className="lg:flex lg:items-center lg:space-x-4 hidden">
-//             <Link className="font-sora text-base tracking-wide" href="/female">
-//               Female
-//             </Link>
-//             <Link className="font-sora text-base tracking-wide" href="/male">
-//               Male
-//             </Link>
-//             <Link className="font-sora text-base tracking-wide" href="/kids">
-//               Kids
-//             </Link>
-//             <Link className="font-sora text-base tracking-wide" href="/allProduct">
-//               All Product
-//             </Link>
-//           </div>
-//         </div>
-
-//         <div className="relative">
-//           <Link href="/cart">
-//             <a className="relative">
-//               <svg
-//                 xmlns="http://www.w3.org/2000/svg"
-//                 viewBox="0 0 24 24"
-//                 fill="none"
-//                 stroke="currentColor"
-//                 strokeWidth="2"
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//                 className="h-6 w-6"
-//               >
-//                 <circle cx="9" cy="21" r="1"></circle>
-//                 <circle cx="20" cy="21" r="1"></circle>
-//                 <path d="M5 12h14M8 21v-7M16 21v-7"></path>
-//                 <line x1="6" y1="3" x2="6" y2="9"></line>
-//                 <line x1="18" y1="3" x2="18" y2="9"></line>
-//               </svg>
-//               <span
-//                 className={`${
-//                   cartValue > 0 ? "bg-yellow-500" : "bg-gray-200"
-//                 } absolute top-0 right-0 rounded-full h-4 w-4 font-sans text-xs text-white flex items-center justify-center`}
-//               >
-//                 {cartValue}
-//               </span>
-//             </a>
-//           </Link>
-//         </div>
-//       </nav>
-//     </header>
-//   );
-// }

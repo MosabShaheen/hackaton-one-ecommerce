@@ -90,7 +90,7 @@ export default function Footer() {
       <div className="mt-24 border-t-2  border-[#666] ">
         <div className="my-4 flex flex-col sm:flex-row justify-between items-center">
         <p>Copyright © 2023 Dine Market</p>
-        <p>Design by. Taiba Creations</p>
+        <p>Design by. Weird Design Studio</p>
         <p>Code by. MosabShaheen on github</p>
         </div>
       </div>

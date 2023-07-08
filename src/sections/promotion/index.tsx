@@ -2,12 +2,12 @@ import Image from "next/image";
 
 export default function Promotion(){
     return(
-        <div className="container px-10 mx-auto my-40">
+        <div className="container sm:px-10 mx-auto my-40 px-0">
             <p className="text-center font-bold text-xs leading-4 tracking-widest text-[#0062f5]">PROMOTIONS</p>
             <h2 className="text-center font-bold text-2xl sm:text-[32px] leading-10 tracking-wide text-[#212121] mt-3 mb-4">Our Promotions Event</h2>
             <div className="grid md:grid-cols-2 grid-cols-1 md:space-x-5 lg:space-x-5 px-8">
                 <div className="flex flex-col justify-between gap-4 flex-1">
-                    <div className="flex items-center justify-between bg-[#d6d6d8] px-8 text-[#212121] tracking-wider flex-1">
+                    <div className="flex items-center justify-between bg-[#d6d6d8] px-0 sm:px-8 text-[#212121] tracking-wider flex-1">
                         <div className="flex-1">
                             <h3 className="uppercase font-bold text-xl sm:text-3xl leading-9 text-[#212121]">{`get up to`} <span className="font-[800] text-2xl sm:text-4xl sm:leading-[45px]">60%</span></h3>
                             <p className="font-normal text-sm sm:text-lg leading-6 tracking-wide sm:w-[70%]">For the summer reason</p>

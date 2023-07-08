@@ -1,7 +1,8 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer components {
   .size{
     @apply rounded-full bg-gray-100 hover:bg-gray-200 duration-150 ease-in-out font-bold leading-4 tracking-wider text-base text-[#666] w-10 h-10 flex justify-center items-center

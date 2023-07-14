@@ -66,7 +66,6 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
     "id4": false,
     "id5": false,
   })
-  const notify = () => toast("Wow so easy!");
   return (
     <div className="mt-20 px-10 overflow-hidden">
       <div className="flex gap-6 flex-col lg:flex-row">

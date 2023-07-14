@@ -17,6 +17,34 @@ export default async function Products() {
         <h2 className="capitalize text-center font-bold text-[32px] leading-10 tracking-wide text-[#212121] mt-3 mb-4">
           check what we have
         </h2>
+        <div className="md:hidden">
+        <Swiper
+          spaceBetween={0}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+        >
+          {products.map((product: any) => (
+            <SwiperSlide key={product._id}>
+              <Link className="mb-8 hover:scale-110 duration-700 ease-in-out" href={`/product-detail/${product._id}`} key={product._id}>
+                <Image
+                  width="400"
+                  height="200"
+                  alt="product img"
+                  src={urlForImage(product.img).url()}
+                />
+                <p className="font-semibold leading-6 tracking-wide text-[#212121] text-[1.05rem] mt-3">
+                  {product.name}
+                </p>
+                <p className="font-semibold leading-6 tracking-wide text-[#212121] text-[1.25rem] mt-3">
+                  ${product.price}
+                </p>
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        </div>
+        <div className="md:block hidden">
         <Swiper
           spaceBetween={0}
           slidesPerView={3}
@@ -42,6 +70,7 @@ export default async function Products() {
             </SwiperSlide>
           ))}
         </Swiper>
+        </div>
       </div>
     </div>
   );

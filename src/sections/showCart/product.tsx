@@ -26,7 +26,7 @@ const Product: FC<{ row: any }> = ({ row }) => {
   const handleSave = async () => {
     openSave(false)
     const save = async () => {
-     const response = await fetch("api/cart", {
+     const response = await fetch("/api/cart", {
         method: 'PATCH',
         body: JSON.stringify(
           {

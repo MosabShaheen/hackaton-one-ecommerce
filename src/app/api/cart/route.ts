@@ -17,7 +17,6 @@ export const GET = async (request: NextRequest) => {
       .where(eq(cartTable.user_id, userId));
     return NextResponse.json(result[0], { status: 200 });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Something went wrong" });
   }
 }
@@ -43,12 +42,13 @@ export const POST = async (request: NextRequest) => {
         quantity: req.quantity,
         price: req.price,
         size: req.size,
+        name: req.name,
+        imageurl: req.imageURL,
       })
       .returning();
 
     return NextResponse.json({ res });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Something went wrong" });
   }
 };
@@ -80,7 +80,6 @@ export const DELETE = async (request: NextRequest) => {
 
     return NextResponse.json({ message: "Item deleted successfully" });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Something went wrong" });
   }
 };

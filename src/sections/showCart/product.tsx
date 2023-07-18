@@ -11,91 +11,98 @@ import "react-toastify/dist/ReactToastify.css";
 const Product: FC<{ row: any }> = ({ row }) => {
   const [products, setProducts] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(row.quantity);
-  const [save, openSave] = useState(false)
+  const [save, openSave] = useState(false);
+
   const id = row.product_id;
+
+
   const handleIncrement = () => {
-    setQuantity(quantity + 1)
+    setQuantity(quantity + 1);
     openSave(true);
   };
+
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      openSave(true)
+      openSave(true);
     }
   };
+
   const handleSave = async () => {
-    openSave(false)
+    openSave(false);
     const save = async () => {
-     const response = await fetch("/api/cart", {
-        method: 'PATCH',
-        body: JSON.stringify(
-          {
+      const response = await fetch("/api/cart", {
+        method: "PATCH",
+        body: JSON.stringify({
           id: row.id,
-          quantity: quantity
-          }
-          ),
-        cache: 'no-store',
-    })
-    return response
-    }
-    toast.promise(
-      save,
-      {
-       success: `Item updated successfully 👌`,
-       error: `Can not update🤯`
-     },
-     {
-       position: "top-center",
-       autoClose: 5000,
-       hideProgressBar: true,
-       closeOnClick: true,
-       pauseOnHover: true,
-       draggable: true,
-       progress: undefined,
-        theme: "light",
-       }
-   ).then(() => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  });
-   }
+          quantity: quantity,
+        }),
+        cache: "no-store",
+      });
+      return response;
+    };
+    toast
+      .promise(
+        save,
+        {
+          success: `Item updated successfully 👌`,
+          error: `Can not update🤯`,
+        },
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      )
+      .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      });
+  };
+
   const deleteData = {
     item_id: row.id,
   };
 
   const handleDelete = async () => {
-
     const deleteItem = async () => {
-     const response =  await fetch(`/api/cart`, {
+      const response = await fetch(`/api/cart`, {
         method: "DELETE",
         headers: { itemId: deleteData.item_id.toString() },
-        cache: 'no-store',
+        cache: "no-store",
       });
-      return (response);
-    }
-    toast.promise(
-      deleteItem,
-      {
-       success: `Item deleted successfully 👌`,
-       error: `Can not delete🤯`
-     },
-     {
-      position: "top-center",
-       autoClose: 5000,
-       hideProgressBar: true,
-       closeOnClick: true,
-       pauseOnHover: true,
-       draggable: true,
-       progress: undefined,
-        theme: "light",
-       }
-   ).then(() => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  });
-  }
+      return response;
+    };
+    toast
+      .promise(
+        deleteItem,
+        {
+          success: `Item deleted successfully 👌`,
+          error: `Can not delete🤯`,
+        },
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      )
+      .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      });
+  };
 
   useEffect(() => {
     const getProduct = async () => {
@@ -106,6 +113,8 @@ const Product: FC<{ row: any }> = ({ row }) => {
     };
     getProduct();
   }, [id]);
+
+  
   return (
     <>
       {products.map((product) => (
@@ -117,7 +126,7 @@ const Product: FC<{ row: any }> = ({ row }) => {
             width="200"
             height="100"
             alt={`${product.name}`}
-            src={urlForImage(product.img).url()}
+            src={row.imageurl}
           />
           <div className="flex-1 sm:flex-[2] md:flex-[3]">
             <div className="flex items-center justify-between">
@@ -136,32 +145,32 @@ const Product: FC<{ row: any }> = ({ row }) => {
                 pauseOnHover
                 theme="light"
               />
-              {
-                save === false?
+              {save === false ? (
                 <button onClick={handleDelete}>
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 24 24"
-                  className="text-2xl cursor-pointer"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 24 24"
+                    className="text-2xl cursor-pointer"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g>
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path d="M7 4V2h10v2h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5zM6 6v14h12V6H6zm3 3h2v8H9V9zm4 0h2v8h-2V9z"></path>
+                    </g>
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  onClick={handleSave}
+                  className="uppercase text-white bg-red-700 hover:bg-red-800 ease-in-out duration-150 font-medium px-2 py-1 text-sm rounded-md"
                 >
-                  <g>
-                    <path fill="none" d="M0 0h24v24H0z"></path>
-                    <path d="M7 4V2h10v2h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5zM6 6v14h12V6H6zm3 3h2v8H9V9zm4 0h2v8h-2V9z"></path>
-                  </g>
-                </svg>
-              </button>
-              : 
-                <button onClick={handleSave} className="uppercase text-white bg-red-700 hover:bg-red-800 ease-in-out duration-150 font-medium px-2 py-1 text-sm rounded-md">
                   Save
                 </button>
-              }
-              
-
+              )}
             </div>
             <p className="font-semibold text-lg text-[#666666] mt-2">
               {product.type}
@@ -175,7 +184,7 @@ const Product: FC<{ row: any }> = ({ row }) => {
             </p>
             <div className="mt-4 flex justify-between items-center">
               <p className="font-bold text-xl leading-7 text-[#212121] tracking-widest">
-                ${product.price}
+                ${row.price}
               </p>
               <div className="flex gap-3 items-center">
                 <button

@@ -16,6 +16,12 @@ export const cartTable = pgTable("cart",{
     size: varchar("size", {
         length: 255
     }).notNull(),
+    name: varchar("name", {
+        length: 255
+    }).notNull(),
+    imageurl:varchar('imageurl',{
+        length: 255
+    }).notNull()
 })
 
 export type Cart = InferModel<typeof cartTable>;

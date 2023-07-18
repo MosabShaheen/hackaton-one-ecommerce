@@ -8,6 +8,7 @@ import CartProductSkelton from "./productSkeleton";
 const ShowCart = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     setLoading(true);
     fetch("/api/cartSummary")
@@ -19,7 +20,7 @@ const ShowCart = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error retrieving cart data:", error);
+        console.log("Error fetching cart summary", error);
       });
   }, []);
 

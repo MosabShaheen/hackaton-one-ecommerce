@@ -22,7 +22,9 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
     product_id : product._id,
     quantity: quantity,
     price: product.price,
-    size: size
+    size: size,
+    name:product.name,
+    imageURL:urlForImage(product.img).url(),
   }
   const handleAddToCart = async() => {
     if(data.size==""){
@@ -103,7 +105,7 @@ const DetailProduct: FC<{ product: any }> = ({ product }) => {
               <ToastContainer
                 position="top-right"
                 autoClose={5000}
-                hideProgressBar={false}
+                hideProgressBar={true}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}
